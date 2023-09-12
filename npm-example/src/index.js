@@ -9,11 +9,9 @@ SplitRumAgent.register(webVitals());
 
 // Setup the Split RUM agent whenever identity information is available.
 // Once the setup is done, the agent will start sending tracked events to Split services.
-SplitRumAgent
-  .setup('<YOUR-CLIENT-SIDE-SDK-KEY>',
-    // Uncomment next line if you are using a proxy or an SDK Key from stage
-    // { url: 'https://events.split-stage.io/api' }
-  )
-  .addIdentities([
-    { key: 'user_id', trafficType: 'user' }
-  ]);
+SplitRumAgent.setup('<YOUR-CLIENT-SIDE-SDK-KEY>',
+  // Set the `url` config param if you are using a proxy or an SDK Key from stage
+  // { url: 'https://events.split-stage.io/api' }
+).addIdentities([
+  { key: 'user_id', trafficType: 'user' }
+]);

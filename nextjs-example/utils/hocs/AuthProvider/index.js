@@ -21,6 +21,23 @@ const AuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    import('../../../config/rumAgent').then(() => {
+      // Remove identities, if there are any, before adding the new one
+      SplitRumAgent.removeIdentities();
+
+      // If the user logs in, his/her accountId is added as a user key for the RUM Agent
+      if (state.accountId) {
+        SplitRumAgent.addIdentity({
+          key: state.accountId,
+          trafficType: 'user',
+        });
+      }
+    }).catch((err) => {
+      console.error('Error loading Split RUM Agent', err);
+    });
+  }, [state.accountId]);
+
+  useEffect(() => {
     (async () => {
       try {
         const {
@@ -88,7 +105,7 @@ const AuthProvider = ({ children }) => {
         redirect_to: currentURL
       });
       const requestTokenResults = response.data;
-    
+
       const requestToken = requestTokenResults.request_token;
       saveState({
         request_token: requestToken,

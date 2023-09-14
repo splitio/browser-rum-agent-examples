@@ -1,45 +1,37 @@
+# RUM Agent example using NPM package in a Next.js project
 
-# next-movies
+This project is a fork of the [next-movies](https://github.com/tastejs/next-movies) project, a Web App demo built using Next.js, React and [The Movie Database (TMDB)](https://www.themoviedb.org/) API.
 
-This is a Movies App built using Next.js, React and [The Movie Database (TMDB)](https://www.themoviedb.org/) API. 
-
-## Demo
-
-A [live deployment](https://movies.zaps.dev) of this app is available to try it out.
-
-## Contributing
-
-Contributions are always welcome! 
-
-For large changes, please file an issue to discuss your proposed changes with us before working on a PR :)
-
-## Installation 
-
-Clone and install the dependencies for `next-movies` locally:
-
-```bash 
-  git clone https://github.com/tastejs/next-movies.git
-  cd next-movies 
-  npm install
-```
+The project is a Single Page Application (SPA) that features user authentication, and was modified to use the Split RUM Agent to track events out-of-the-box.
 
 ## Quick setup
 
-1. Take a copy of .env.local.example and re-name to .env.local
-2. Get your TMDb API key
-3. Get your TMDB API read access token
-4. Enter the details into the .env.local file
-    
-## Running locally
+1. Install dependencies: `npm install`
+2. Take a copy of `.env.local.example` and re-name to `.env.local`
+3. Get your TMDb API key and TMDB API read access token from [TMDB](https://www.themoviedb.org/), and enter the details into the `.env.local` file. You will need to create an account if you don't have one. If you don't set these values, the app will still work but it will serve an error page instead of the movie list.
+4. Get your Split client-side SDK key from the Split UI and enter it into the `.env.local` file. If you don't set this value, the app will still work but the RUM Agent will fail to initialize.
+5. Build and run the app locally: `npm run build && npm run start`.
+
+### Available scripts
 
 * `npm run dev`: dev build
 * `npm run build`: production build
 * `npm run static-build`: production static build
 * `npm run start`: start the project
 * `npm run vercel-deploy`: deploy to vercel
-* `npm run netlify-deploy`: deploy to netlify 
-* `npm run analyze`: bundle analysis 
+* `npm run netlify-deploy`: deploy to netlify
+* `npm run analyze`: bundle analysis
 * (`analyze:server` and `analyze:browser` are available too)
+
+## How to setup the RUM Agent in a Next.js project with authentication
+
+Since this is an NPM project, using the NPM package is the recommended approach.
+
+1. Install the Split Browser RUM Agent package: `npm install @splitsoftware/browser-rum-agent`.
+2. Create a source file to import and set up the Agent. In this project, `config/rumAgent.js` is used for that purpose.
+3. Import the file and add logic for handling RUM Agent identities. We use `utils/AuthProvider/index.js` for this. The RUM Agent is dynamically imported when the `AuthProvider` component mounts. On user login, we call `SplitRumAgent.addIdentity()` with the user's `accountId`. On logout, we call `SplitRumAgent.removeIdentities()`.
+
+Alternatively, you can also use the Split CDN to load the RUM Agent, for example, by adding the corresponding script tag in the `pages/_document.js` file.
 
 ## Tech Stack
 
@@ -56,19 +48,4 @@ Built with:
 * use-dark-mode
 * @artsy/fresnel
 * @loadable/component
-
-## next/image
-
-In most cases, we strongly recommend using the [next/image](https://nextjs.org/docs/api-reference/next/image) component for optimizing how you load images. For the next-movies app, there are a few app-specific reasons we currently don't use the component. Using `react-lazyload`, we lazy-load the entire `MovieListItem` component (for example), where elements like the movie name and star ratings don't load until they get near the viewport. This behavior is currently not possible with next/image. In the future, there may be more "Suspense"-y ways of approaching images in React/Next, which would make this type of pattern more first-class. Until then, check out our approach, but you'll likely be otherwise be able to make next/image work for you.
-  
-  
-## Authors
-
-- [@anton-karlovskiy](https://github.com/anton-karlovskiy)
-- [@addyosmani](https://github.com/addyosmani)
-
-Based on the original `create-react-app` foundation by [@fidalgodev](https://github.com/fidalgodev/movie-library-react).
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+* @splitsoftware/browser-rum-agent

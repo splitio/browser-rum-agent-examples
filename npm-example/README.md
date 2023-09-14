@@ -1,3 +1,5 @@
+# RUM Agent example using NPM package and Webpack
+
 This example requires `npm` to install dependencies and run scripts.
 
 It uses [Webpack](https://webpack.js.org/) to build a simple Web page, and [http-server](https://www.npmjs.com/package/http-server) to serve it.

@@ -1,3 +1,5 @@
+# RUM Agent example using the Split CDN
+
 This example consists of self-contained HTML files with JavaScript.
 
 All files consist of the same Web page but employ different approaches to load the RUM-Agent from the Split CDN: `https://cdn.split.io/rum-agent/browser-rum-agent-0.3.0.min.js`

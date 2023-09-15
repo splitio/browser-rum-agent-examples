@@ -10,6 +10,8 @@ All files consist of the same Web page but employ different approaches to load t
 
 ## How to run
 
-You can either open these files directly in your browser or host them on a web server,  for example, by running `npx http-server public` if using NPM.
+Replace `<YOUR-CLIENT-SIDE-SDK-KEY>` in the HTML files with your Split SDK key.
+
+Then, you can either open these files directly in your browser, or host them on a web server, for example, by running `npx http-server public` if using NPM.
 
 To check tracked events, go to the Split UI or look in the Network tab of your Browser Dev Tools. You should see POST requests to `https://events.split.io/api/events/beacon` containing the tracked events.

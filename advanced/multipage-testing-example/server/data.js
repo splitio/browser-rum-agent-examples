@@ -90,7 +90,10 @@ dataRouter.get('/results', async (req, res) => {
 
       const meanON = valuesForOn.reduce((acc, value) => acc + value, 0) / valuesForOn.length;
       const meanOFF = valuesForOff.reduce((acc, value) => acc + value, 0) / valuesForOff.length;
-      const stat = ttest(valuesForOn, valuesForOff, { alpha: 0.05, alternative: "less" });
+
+      const stat = valuesForOn.length && valuesForOff.length ?
+        ttest(valuesForOn, valuesForOff, { alpha: 0.05, alternative: "less" }) :
+        { pValue: NaN, rejected: false };
 
       results[eventTypeId] = {
         sampleSizeON: valuesForOn.length,
@@ -107,7 +110,7 @@ dataRouter.get('/results', async (req, res) => {
     // HTML table with results
     const html = Object.keys(results).reduce((html, eventTypeId) => {
       const result = results[eventTypeId];
-      return html + `<tr><td>${eventTypeId}</td><td>${result.sampleSizeON}</td><td>${result.sampleSizeOFF}</td><td>${result.meanON}</td><td>${result.meanON}</td><td>${result.pValue}</td><td>${result.testDecision}</td></tr>`;
+      return html + `<tr><td>${eventTypeId}</td><td>${result.sampleSizeON}</td><td>${result.sampleSizeOFF}</td><td>${result.meanON}</td><td>${result.meanOFF}</td><td>${result.pValue}</td><td>${result.testDecision}</td></tr>`;
     }, '<table><tr><th>Event Type Id</th><th>Sample size ON</th><th>Sample size OFF</th><th>Mean ON</th><th>Mean OFF</th><th>P-value of one-tailed t-test</th><th>Mean ON < Mean OFF (P-value < 0.05)</th></tr>');
     res.send('<html><body>' + html + '</body></html>');
 

@@ -10,6 +10,6 @@ SplitRumAgent
   )
   .addIdentities([
     // get key from URL query parameter `id`
-    { key: new URLSearchParams(window.location.search).get('id') || 'anonymous', trafficType: 'user' }
+    { key: new URLSearchParams(window.location.search).get('id'), trafficType: 'user' }
   ]);
 SplitRumAgent.register(webVitals());

@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
 
-const SAMPLE_SIZE = 100;
+const SAMPLE_SIZE = 200;
 
+// https://fdalvi.github.io/blog/2018-02-05-puppeteer-network-throttle/
 const NETWORK_CONDITIONS = {
   Regular3G: {
     download: 750 * 1024 / 8,
@@ -40,13 +41,13 @@ const NETWORK_CONDITIONS = {
 
     // Emulate network conditions and disable cache to simulate new users
     await page.setCacheEnabled(false);
-    await page.emulateNetworkConditions(NETWORK_CONDITIONS.Regular3G);
+    await page.emulateNetworkConditions(NETWORK_CONDITIONS.Regular4G);
 
     // Navigate to URL
     await page.goto(`http://localhost:3000/?id=${id}`);
 
     // Perform click on an element
-    await page.click('#split_logo'); // Replace 'selector_here' with the actual selector
+    await page.click('#split_logo');
   }
 
   // Close browser

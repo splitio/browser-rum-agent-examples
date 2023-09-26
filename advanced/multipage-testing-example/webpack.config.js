@@ -17,8 +17,8 @@ module.exports = [{
     }),
   ],
   output: {
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js',
+    filename: '[name].bundle-on.js',
+    chunkFilename: '[name].bundle-on.js',
     path: path.resolve(__dirname, 'dist', 'async')
   },
 }, {
@@ -35,8 +35,8 @@ module.exports = [{
     }),
   ],
   output: {
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js',
+    filename: '[name].bundle-off.js',
+    chunkFilename: '[name].bundle-off.js',
     path: path.resolve(__dirname, 'dist', 'sync')
   },
 }];

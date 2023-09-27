@@ -4,6 +4,21 @@ One of the variants (treatment 'on') has some performance optimizations, while t
 
 An automation script is used to navigate the page multiple times, generating events and impressions for both treatments. The events and impressions are stored in a JSON file, and the server also exposes an endpoint with the results of a statistical analysis of the events per treatment.
 
+# How to run
+
+1. Take a copy of `.env.example` and re-name to `.env`.
+2. Add your Split SDK keys and feature flag name to `.env`.
+3. Run `npm install` to install dependencies.
+4. Run `npm run serve` to build the app and start the server. The Web page will be served at `http://localhost:3000/?id=<user-id>`, where `<user-id>` is a unique identifier for the user, used by the Split SDK to bucket the user into a treatment.
+5. Run `npm run automation` to run the automation script. The script can take a few minutes to complete, as it will generate events and impressions by navigating to the Web page multiple times with different user IDs, using [Puppeteer and Chrome Headless](https://www.npmjs.com/package/puppeteer).
+6. Open the browser and navigate to `http://localhost:3000/results` to see the captured events per treatments and some statistics.
+
+Results example:
+
+<div>
+<table><tbody><tr><th>Event Type Id</th><th>Sample size ON</th><th>Sample size OFF</th><th>Mean ON</th><th>Mean OFF</th><th>P-value of one-tailed t-test</th><th>Mean ON &lt; Mean OFF (P-value &lt; 0.05)</th></tr><tr><td>webvitals.fcp</td><td>105</td><td>95</td><td>67.79428571462631</td><td>69.04842105037288</td><td>0.03670325936369289</td><td>true (true)</td></tr><tr><td>time.to.dom.interactive</td><td>105</td><td>95</td><td>326.5380952386629</td><td>567.4326315760612</td><td>5.530411320011414e-113</td><td>true (true)</td></tr><tr><td>page.load.time</td><td>105</td><td>95</td><td>1130.926666665645</td><td>1234.1915789466154</td><td>0.05343286424657917</td><td>true (false)</td></tr><tr><td>webvitals.ttfb</td><td>102</td><td>93</td><td>26.551960785599316</td><td>26.616129030463515</td><td>0.4058448324706111</td><td>true (false)</td></tr><tr><td>webvitals.lcp</td><td>102</td><td>93</td><td>467.39313725747314</td><td>555.6731182759808</td><td>4.18922939350515e-46</td><td>true (true)</td></tr><tr><td>webvitals.fid</td><td>102</td><td>92</td><td>0.512745099324806</td><td>0.5793478281601615</td><td>0.01888211054620341</td><td>true (true)</td></tr><tr><td>webvitals.inp</td><td>60</td><td>50</td><td>8.4</td><td>8.48</td><td>0.4212551693853355</td><td>true (false)</td></tr><tr><td>webvitals.cls</td><td>60</td><td>51</td><td>0.1644879057617188</td><td>0.13231082812500003</td><td>1</td><td>false (false)</td></tr></tbody></table>
+</div>
+
 # Contents
 
 - `/client`: source code of the Web application and its two variants
@@ -24,18 +39,3 @@ An automation script is used to navigate the page multiple times, generating eve
 - `npm run build`: builds the two variants of the application
 - `npm run serve`: builds the two variants of the application and starts the NodeJS server
 - `npm run automation`: runs the automation script
-
-# How to run
-
-1. Take a copy of `.env.example` and re-name to `.env`.
-2. Add your Split SDK keys and feature flag name to `.env`.
-3. Run `npm install` to install dependencies.
-4. Run `npm run serve` to build the app and start the server.
-5. Run `npm run automation` to run the automation script. It will take a few minutes to complete, as it will generate events and impressions by navigating to the application multiple times with Puppeteer.
-6. Open the browser and navigate to `http://localhost:3000/results` to see the captured events per treatments and some statistics.
-
-Results example:
-
-<div>
-<table><tbody><tr><th>Event Type Id</th><th>Sample size ON</th><th>Sample size OFF</th><th>Mean ON</th><th>Mean OFF</th><th>P-value of one-tailed t-test</th><th>Mean ON &lt; Mean OFF (P-value &lt; 0.05)</th></tr><tr><td>webvitals.fcp</td><td>105</td><td>95</td><td>67.79428571462631</td><td>69.04842105037288</td><td>0.03670325936369289</td><td>true (true)</td></tr><tr><td>time.to.dom.interactive</td><td>105</td><td>95</td><td>326.5380952386629</td><td>567.4326315760612</td><td>5.530411320011414e-113</td><td>true (true)</td></tr><tr><td>page.load.time</td><td>105</td><td>95</td><td>1130.926666665645</td><td>1234.1915789466154</td><td>0.05343286424657917</td><td>true (false)</td></tr><tr><td>webvitals.ttfb</td><td>102</td><td>93</td><td>26.551960785599316</td><td>26.616129030463515</td><td>0.4058448324706111</td><td>true (false)</td></tr><tr><td>webvitals.lcp</td><td>102</td><td>93</td><td>467.39313725747314</td><td>555.6731182759808</td><td>4.18922939350515e-46</td><td>true (true)</td></tr><tr><td>webvitals.fid</td><td>102</td><td>92</td><td>0.512745099324806</td><td>0.5793478281601615</td><td>0.01888211054620341</td><td>true (true)</td></tr><tr><td>webvitals.inp</td><td>60</td><td>50</td><td>8.4</td><td>8.48</td><td>0.4212551693853355</td><td>true (false)</td></tr><tr><td>webvitals.cls</td><td>60</td><td>51</td><td>0.1644879057617188</td><td>0.13231082812500003</td><td>1</td><td>false (false)</td></tr></tbody></table>
-</div>

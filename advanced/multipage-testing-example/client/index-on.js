@@ -2,13 +2,7 @@
 import('./browser-rum-agent').then(({ SplitRumAgent, webVitals }) => {
 
   SplitRumAgent
-    .setup(process.env.CLIENT_SIDE_SDK_KEY,
-      process.env.EVENTS_URL ?
-        { url: process.env.EVENTS_URL } :
-        process.env.IS_STAGING ?
-          { url: 'https://sdk.split-stage.io/api' } :
-          {}
-    )
+    .setup(process.env.CLIENT_SIDE_SDK_KEY)
     .addIdentities([
       // get key from URL query parameter `id`
       { key: new URLSearchParams(window.location.search).get('id'), trafficType: 'user' }

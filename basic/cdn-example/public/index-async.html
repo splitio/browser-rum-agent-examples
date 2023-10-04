@@ -18,7 +18,7 @@
     // Invoked when the Agent is loaded
     function setupRumAgent() {
       SplitRumAgent.setup('<YOUR-CLIENT-SIDE-SDK-KEY>',
-        // Set the `url` config param if you are using a proxy or an SDK Key from stage
+        // Set the `url` config param if you are using a proxy
         // { url: 'https://events.split-stage.io/api' }
       ).addIdentities([
         { key: 'user_id', trafficType: 'user' }

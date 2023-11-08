@@ -16,14 +16,14 @@
     // Create and insert an async script tag with our CDN URL as the source
     var script = document.createElement('script');
     script.async = true;
-    script.src = "https://cdn.split.io/rum-agent/browser-rum-agent-0.3.1.full.min.js";
+    script.src = "https://cdn.split.io/rum-agent/browser-rum-agent-0.3.2.full.min.js";
     var n = document.getElementsByTagName('script')[0];
     n.parentNode.insertBefore(script, n);
 
     // Setup the Agent once the script is loaded
     script.onload = function setupRumAgent() {
       SplitRumAgent.setup('<YOUR-CLIENT-SIDE-SDK-KEY>',
-        // Set the `url` config param if you are using a proxy or an SDK Key from stage
+        // Set the `url` config param if you are using a proxy
         // { url: 'https://events.split-stage.io/api' }
       ).addIdentities([
         { key: 'user_id', trafficType: 'user' }

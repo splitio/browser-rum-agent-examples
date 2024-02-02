@@ -26,8 +26,8 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "@splitsoftware/browser-rum-agent": "^0.3.2",
-    "@splitsoftware/splitio": "^10.23.0",
+    "@splitsoftware/browser-rum-agent": "^0.4.1",
+    "@splitsoftware/splitio": "^10.25.1",
     "express": "^4.18.2"
   }
 }
